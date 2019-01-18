@@ -47,13 +47,13 @@ def main:
 					hero_vitesse_y = -5	
 
 			if event.type == pygame.KEYDOWN:
-				if event.type == pygame.K_RIGHT or event.type == pygame.K_d:
+				if event.type == pygame.K_RIGHT or event.type == pygame.K_d: # Deplacement Droite
 					hero_vitesse_x = 0
 
-				if event.type == pygame.K_LEFT or event.type == pygame.K_q:
+				if event.type == pygame.K_LEFT or event.type == pygame.K_q: # Deplacement Gauche
 					hero_vitesse_x = 0
 
-				if event.type == pygame.K_UP or event.type == pygame.K_SPACE or event.type == pygame.K_z:
+				if event.type == pygame.K_UP or event.type == pygame.K_SPACE or event.type == pygame.K_z: # Deplacement saut
 					hero_vitesse_y = 5
 
 

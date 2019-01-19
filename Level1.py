@@ -1,68 +1,68 @@
 import pygame
+import os
 # DEBUT LEVEL 1 : MonsterInvasion
+
+def hero (ecran,x,y):
+	fenetre.blit (hero_img(hero_x,hero_y))
 
 pygame.init()
 
 # Gestion fenetre
-fenetre_longeur = 800 # Largeur fenetre
-fenetre_largeur = 500 # Hauteur Fentre
+fenetre_longeur = 1280 # Largeur fenetre
+fenetre_largeur = 720 # Hauteur Fentre
 
-resolution = pygame.display.set_mode((fenetre_longeur, fenetre_largeur)) # initialisation de la fenetre
+ecran = pygame.display.set_mode((fenetre_longeur, fenetre_largeur)) # initialisation de la fenetre
 pygame.display.set_caption("MonsterInvasion") # Nom de la fentre
- 
-# Gestion Hero
-longeur_hero = #Hauteur a definir
-largeur_hero= #Largeur a definir
 
-def hero (hero_x,hero_y,hero_img):
-	fenetre.blit (hero_img (hero_x,hero_y))
+# Gestion images
+hero_img = pygame.image.load (os.path.join("Hero.png"))
+background = pygame.image.load (os.path.join("FondGame.jpg")) # Pas encore dans le fichier
+# Coord Hero
+hero_x = fenetre_longeur/2 + largeur_hero
+hero_y = fenetre_largeur/2 - longeur_hero
+# Vitesse Hero
+hero_vitesse_x = 0
+hero_vitesse_y = 0
 
-
-def main:
-	hero_x = fenetre_longeur/2 + largeur_hero
-	hero_y = fenetre_largeur/2 - longeur_hero
-
-	hero_vitesse_x =
-	hero_vitesse_ y =
-
-	hero_img = pygame.image.load () #Chemin d'acces du personnage a mettre
-
-	finir = False
+finir = False
 
 	# Evenements en fonction des touches
 
-	while finir = False:
-		for event in pygame.event.get():
-			if event.type == pygame.quit:
-				finir = True
+while not finir:
+	for event in pygame.event.get():
+	   if event.type == pygame.QUIT:
+	       finir = True
 
-			if event.type == pygame.KEYDOWN:
-				if event.type == pygame.K_RIGHT or event.type == pygame.K_d:
-					hero_vitesse_x = 5
+	   if event.type == pygame.KEYDOWN:
 
-				if event.type == pygame.K_LEFT or event.type == pygame.K_q:
-					hero_vitesse_x = -5
+        #Quand on appuie sur la touche :
+	       if event.type == pygame.K_RIGHT or event.type == pygame.K_d:
+	           hero_vitesse_x = 5
 
-				if event.type == pygame.K_UP or event.type == pygame.K_SPACE or event.type == pygame.K_z:
-					hero_vitesse_y = -5	
+	       if event.type == pygame.K_LEFT or event.type == pygame.K_q:
+	           hero_vitesse_x = -5
 
-			if event.type == pygame.KEYDOWN:
-				if event.type == pygame.K_RIGHT or event.type == pygame.K_d:
-					hero_vitesse_x = 0
+	       if event.type == pygame.K_UP or event.type == pygame.K_SPACE or event.type == pygame.K_z:
+	           hero_vitesse_y = -5
 
-				if event.type == pygame.K_LEFT or event.type == pygame.K_q:
-					hero_vitesse_x = 0
+	   if event.type == pygame.KEYUP:
 
-				if event.type == pygame.K_UP or event.type == pygame.K_SPACE or event.type == pygame.K_z:
-					hero_vitesse_y = 5
+        #Quand on lache sur la touche :
 
+	       if event.type == pygame.K_RIGHT or event.type == pygame.K_d:
+	           hero_vitesse_x = 0
 
+	       if event.type == pygame.K_LEFT or event.type == pygame.K_q:
+	           hero_vitesse_x = 0
 
-	pygame.fill() # Image de fond
+	       if event.type == pygame.K_UP or event.type == pygame.K_SPACE or event.type == pygame.K_z:
+	           hero_vitesse_y = 5
 
-	pygame.display.update() # Images pas seconde
+    hero_x = hero_x + hero_vitesse_x # !! Probleme d'indentation !!#
+    hero_y = hero_y + hero_vitesse_y
 
-main()
+	ecran.fill(background) # Effacement de l'ecran
+	clock.tick(60) # Images pas seconde
+
 pygame.quit()
-quit()
 

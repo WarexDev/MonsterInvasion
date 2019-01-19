@@ -45,24 +45,13 @@ while not finir:
 	       if event.type == pygame.K_UP or event.type == pygame.K_SPACE or event.type == pygame.K_z:
 	           hero_vitesse_y = -5
 
-<<<<<<< HEAD
+
 	   if event.type == pygame.KEYUP:
 
         #Quand on lache sur la touche :
 
 	       if event.type == pygame.K_RIGHT or event.type == pygame.K_d:
 	           hero_vitesse_x = 0
-=======
-			if event.type == pygame.KEYDOWN:
-				if event.type == pygame.K_RIGHT or event.type == pygame.K_d: # Deplacement Droite
-					hero_vitesse_x = 0
-
-				if event.type == pygame.K_LEFT or event.type == pygame.K_q: # Deplacement Gauche
-					hero_vitesse_x = 0
-
-				if event.type == pygame.K_UP or event.type == pygame.K_SPACE or event.type == pygame.K_z: # Deplacement saut
-					hero_vitesse_y = 5
->>>>>>> 15192f64fb90da65983e9807a0c106683074cafd
 
 	       if event.type == pygame.K_LEFT or event.type == pygame.K_q:
 	           hero_vitesse_x = 0

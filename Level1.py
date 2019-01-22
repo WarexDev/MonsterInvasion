@@ -83,14 +83,14 @@ while not finir:
         if event.type == pygame.KEYDOWN:
 
 # Quand on appuie sur la touche :
-            if event.key == pygame.K_LEFT:
-                hero_vitesse_x = (-5*fenetre_longeur/100)
-            if event.key == pygame.K_RIGHT:
-                hero_vitesse_x = (5*fenetre_longeur/100)
-            if event.key == pygame.K_UP:
-                hero_vitesse_y = (-5*fenetre_largeur/100)
-            if event.key == pygame.K_DOWN:
-                hero_vitesse_y = (5*fenetre_largeur/100)
+            if event.key == pygame.K_LEFT: # Gauche
+                hero_vitesse_x = (-3*fenetre_longeur/100)
+            if event.key == pygame.K_RIGHT: # Droite
+                hero_vitesse_x = (3*fenetre_longeur/100)
+            if event.key == pygame.K_SPACE or event.key == pygame.K_UP:# Saut
+                hero_vitesse_y = (-3*fenetre_largeur/100)
+            if event.key == pygame.K_DOWN: # Descendre
+                hero_vitesse_y = (3*fenetre_largeur/100)
 
         if event.type == pygame.KEYUP:
 # Quand on lache la touche :
@@ -98,10 +98,10 @@ while not finir:
                 hero_vitesse_x = 0
             if event.key == pygame.K_RIGHT:
                 hero_vitesse_x = 0
-            if event.key == pygame.K_UP:
+            if event.key == pygame.K_SPACE or event.key == pygame.K_UP :
                 hero_vitesse_y = 0
             if event.key == pygame.K_DOWN:
-                hero_vitesse_x = 0
+                hero_vitesse_y = 0
 
     hero_x = hero_x + hero_vitesse_x
     hero_y = hero_y + hero_vitesse_y

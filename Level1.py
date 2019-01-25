@@ -1,6 +1,5 @@
 import pygame
 import os
-from tkinter import *
 from pygame.locals import *
 # DEBUT LEVEL 1 : MonsterInvasion
 
@@ -16,13 +15,13 @@ def background(x,y,image):
 # Couleurs
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-PLATEFORME = (163, 161, 22)
+VERT = (0, 255 , 0)
+MARRON = (70, 46, 1)
 
 
-pygame.init()
+pygame.init() # COMMENCEMENT DU JEU
 
 # Gestion fenetre
-root = Tk()
 fenetre_longeur = 1920 # Largeur fenetre
 fenetre_largeur = 1080 # Hauteur Fentre
 
@@ -61,6 +60,10 @@ background_y = 0
 hero_vitesse_x = 0
 hero_vitesse_y = 0
 
+# Acceleration Hero
+hero_acceleration_x = 0
+hero_acceleration_y = 0
+
 # Coord Ennemie
 ennemie_x = 0
 ennemie_y = plateforme_lvl1_y - largeur_ennemie
@@ -68,6 +71,9 @@ ennemie_y = plateforme_lvl1_y - largeur_ennemie
 # Vitesse Ennemie
 ennemie_vitesse_x = 0
 ennemie_vitesse_y = 0
+
+#Variable pour l'acceleration
+a = 0
 
 clock = pygame.time.Clock()
 
@@ -84,27 +90,66 @@ while not finir:
 
 # Quand on appuie sur la touche :
             if event.key == pygame.K_LEFT: # Gauche
-                hero_vitesse_x = (-3*fenetre_longeur/100)
+
+                hero_acceleration_x = -2
+                a = 1
+                hero_img = pygame.image.load ("images/Hero_gauche.png")
+
             if event.key == pygame.K_RIGHT: # Droite
-                hero_vitesse_x = (3*fenetre_longeur/100)
-            if event.key == pygame.K_SPACE or event.key == pygame.K_UP:# Saut
-                hero_vitesse_y = (-3*fenetre_largeur/100)
+
+                hero_acceleration_x = 2
+                a = 2
+                hero_img = pygame.image.load ("images/Hero.png")
+
+            if event.key == pygame.K_SPACE or event.key == pygame.K_UP: # Saut
+
+                if hero_y + largeur_hero == plateforme_lvl1_y : # barre espace uniquement possible s le personnage est sur la platerforme
+                    hero_vitesse_y = (-3*fenetre_largeur/100)
+
             if event.key == pygame.K_DOWN: # Descendre
+
                 hero_vitesse_y = (3*fenetre_largeur/100)
 
         if event.type == pygame.KEYUP:
 # Quand on lache la touche :
             if event.key == pygame.K_LEFT:
+
                 hero_vitesse_x = 0
+                hero_acceleration_x = 0
+                a = 0
+
             if event.key == pygame.K_RIGHT:
+
                 hero_vitesse_x = 0
+                hero_acceleration_x = 0
+                a = 0
+
             if event.key == pygame.K_SPACE or event.key == pygame.K_UP :
+
                 hero_vitesse_y = 0
+
             if event.key == pygame.K_DOWN:
+
                 hero_vitesse_y = 0
 
     hero_x = hero_x + hero_vitesse_x
     hero_y = hero_y + hero_vitesse_y
+
+    if hero_acceleration_y != 0:
+        hero_vitesse_y = hero_vitesse_y + hero_acceleration_y
+
+    if hero_acceleration_x != 0:
+        hero_vitesse_x = hero_vitesse_x + hero_acceleration_x
+
+    if a == 2: # acceleration a droite
+        if hero_vitesse_x < 4:
+            hero_acceleration_x = hero_acceleration_x + 1.5
+    if a == 1: # acceleration a gauche
+        if hero_vitesse_x > 4:
+            hero_acceleration_x = hero_acceleration_x - 1.5
+
+
+
 
 
 
@@ -119,9 +164,11 @@ while not finir:
     if ennemie_x<hero_x:
         ennemie_vitesse_x = (1*fenetre_longeur/100)
         ennemie_x = ennemie_x + ennemie_vitesse_x
+        ennemie_img = pygame.image.load("images/Ennemie.png")
     if ennemie_x>hero_x:
         ennemie_vitesse_x = (-1*fenetre_longeur/100)
         ennemie_x = ennemie_x + ennemie_vitesse_x
+        ennemie_img = pygame.image.load("images/Ennemie_gauche.png")
 
     ecran.fill(0)
 
@@ -131,13 +178,15 @@ while not finir:
     hero(hero_x,hero_y,hero_img)
     ennemie(ennemie_x, ennemie_y, ennemie_img)
 
-    #placement de la plateforme
-    pygame.draw.rect(ecran,PLATEFORME,[plateforme_lvl1_x,plateforme_lvl1_y,fenetre_longeur,fenetre_largeur]) # plateforme du niveau 1
+    #placement de la plateforme + fine couche
+    pygame.draw.rect(ecran,MARRON,[plateforme_lvl1_x,plateforme_lvl1_y,fenetre_longeur,fenetre_largeur]) # plateforme du niveau 1
+    pygame.draw.rect(ecran,VERT,[plateforme_lvl1_x,plateforme_lvl1_y,fenetre_longeur,7.5])
+
 
     pygame.display.flip()
     clock.tick(60)
 
 
 
-pygame.quit()
+pygame.quit() # FIN
 

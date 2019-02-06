@@ -3,6 +3,66 @@ import os
 from pygame.locals import *
 # DEBUT LEVEL 1 : MonsterInvasion
 
+#Debut parametres Hero
+
+def parametre_hero_1(mot):
+    font = pygame.font.Font(None, 30)
+    text = font.render(mot,True,BLUE)
+    ecran.blit(text, [20, 10])
+
+def parametre_hero_2(mot):
+    font = pygame.font.Font(None, 30)
+    text = font.render(mot,True,BLUE)
+    ecran.blit(text, [100, 10])
+
+def parametre_hero_3(mot):
+    font = pygame.font.Font(None, 30)
+    text = font.render(mot,True,BLUE)
+    ecran.blit(text, [200, 10])
+
+def parametre_hero_4(mot):
+    font = pygame.font.Font(None, 30)
+    text = font.render(mot,True,BLUE)
+    ecran.blit(text, [400, 10])
+
+def parametre_hero_5(mot):
+    font = pygame.font.Font(None, 30)
+    text = font.render(mot,True,BLUE)
+    ecran.blit(text, [600, 10])
+
+
+#Fin parametres Hero
+
+#Debut parametres Ennemie
+
+def parametre_ennemie_1(mot):
+    font = pygame.font.Font(None, 30)
+    text = font.render(mot,True,RED)
+    ecran.blit(text, [20, 90])
+
+def parametre_ennemie_2(mot):
+    font = pygame.font.Font(None, 30)
+    text = font.render(mot,True,RED)
+    ecran.blit(text, [200, 90])
+
+def parametre_ennemie_3(mot):
+    font = pygame.font.Font(None, 30)
+    text = font.render(mot,True,RED)
+    ecran.blit(text, [400, 90])
+
+def parametre_ennemie_4(mot):
+    font = pygame.font.Font(None, 30)
+    text = font.render(mot,True,RED)
+    ecran.blit(text, [800, 90])
+
+def parametre_ennemie_5(mot):
+    font = pygame.font.Font(None, 30)
+    text = font.render(mot,True,RED)
+    ecran.blit(text, [1000, 90])
+
+
+# Fin affichage des parametres de l'ennemie
+
 def hero (x,y,image):
 	ecran.blit (image,(x,y))
 
@@ -17,6 +77,8 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 VERT = (0, 255 , 0)
 MARRON = (70, 46, 1)
+BLUE = (0, 0, 255)
+RED = (255, 0, 0)
 
 
 pygame.init() # COMMENCEMENT DU JEU
@@ -68,6 +130,9 @@ hero_acceleration_y = 0
 ennemie_x = 0
 ennemie_y = plateforme_lvl1_y - largeur_ennemie
 
+#Pour saut
+y_acceleration = 0
+
 # Vitesse Ennemie
 ennemie_vitesse_x = 0
 ennemie_vitesse_y = 0
@@ -104,11 +169,13 @@ while not finir:
             if event.key == pygame.K_SPACE or event.key == pygame.K_UP: # Saut
 
                 if hero_y + largeur_hero == plateforme_lvl1_y : # barre espace uniquement possible s le personnage est sur la platerforme
-                    hero_vitesse_y = (-3*fenetre_largeur/100)
+                    hero_acceleration_y = - 10
 
             if event.key == pygame.K_DOWN: # Descendre
 
                 hero_vitesse_y = (3*fenetre_largeur/100)
+
+
 
         if event.type == pygame.KEYUP:
 # Quand on lache la touche :
@@ -124,10 +191,6 @@ while not finir:
                 hero_acceleration_x = 0
                 a = 0
 
-            if event.key == pygame.K_SPACE or event.key == pygame.K_UP :
-
-                hero_vitesse_y = 0
-
             if event.key == pygame.K_DOWN:
 
                 hero_vitesse_y = 0
@@ -135,8 +198,18 @@ while not finir:
     hero_x = hero_x + hero_vitesse_x
     hero_y = hero_y + hero_vitesse_y
 
+    # Saut du personnage
+
+    if hero_y + largeur_hero < plateforme_lvl1_y :
+        hero_acceleration_y = hero_acceleration_y + 1
+    else :
+        hero_vitesse_y = 0
+
     if hero_acceleration_y != 0:
         hero_vitesse_y = hero_vitesse_y + hero_acceleration_y
+        hero_acceleration_y = 0
+
+    # Acceleration du personnage
 
     if hero_acceleration_x != 0:
         hero_vitesse_x = hero_vitesse_x + hero_acceleration_x
@@ -145,7 +218,7 @@ while not finir:
         if hero_vitesse_x < 4:
             hero_acceleration_x = hero_acceleration_x + 1.5
     if a == 1: # acceleration a gauche
-        if hero_vitesse_x > 4:
+        if hero_vitesse_x > -4:
             hero_acceleration_x = hero_acceleration_x - 1.5
 
 
@@ -153,9 +226,13 @@ while not finir:
 
 
 
-# Colisions avec la plateforme
-    if hero_y + largeur_hero > plateforme_lvl1_y:
+# Colisions
+    if hero_y + largeur_hero > plateforme_lvl1_y: # plateforme colisions
         hero_y = plateforme_lvl1_y - largeur_hero
+    if hero_x < background_x :
+        hero_x = 0
+    if hero_x + longeur_hero > fenetre_longeur :
+        hero_x = fenetre_longeur - longeur_hero
 
 
 
@@ -175,6 +252,19 @@ while not finir:
     # DEBUT DE L'AFFICHAGE
 
     background(background_x, background_y, fond_ecran)
+
+    # Affichage des parametres
+
+    parametre_hero_1(str(hero_x))
+    parametre_hero_2(str(hero_y))
+    parametre_hero_3(str(hero_vitesse_x))
+    parametre_hero_4(str(hero_vitesse_y))
+    parametre_hero_5(str(hero_acceleration_x))
+
+    parametre_ennemie_1(str(ennemie_x))
+    parametre_ennemie_2(str(ennemie_y))
+
+
     hero(hero_x,hero_y,hero_img)
     ennemie(ennemie_x, ennemie_y, ennemie_img)
 
